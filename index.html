@@ -7,9 +7,9 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-out" />
-  <meta name="apple-mobile-web-app-title" content="VoiceLog" />
+  <meta name="apple-mobile-web-app-title" content="RipVoice" />
   <link rel="manifest" href="manifest.json" />
-  <title>VoiceLog</title>
+  <title>RipVoice</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,8 +35,8 @@
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-family: var(--sans); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
-    .logo span { color: var(--accent); }
+    .logo { font-family: var(--sans); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; color: var(--accent); }
+    .logo span { color: var(--accent2); }
     .api-btn {
       font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
       background: none; border: 1px solid var(--border); border-radius: 4px;
@@ -67,12 +67,12 @@
     }
     .rec-btn:active { transform: scale(0.95); }
     .rec-btn:hover { border-color: var(--accent); }
-    .rec-btn.recording { border-color: var(--danger); }
-    .rec-inner { width: 32px; height: 32px; border-radius: 50%; background: var(--danger); transition: border-radius 0.3s, width 0.3s, height 0.3s; }
+    .rec-btn.recording { border-color: var(--accent2); }
+    .rec-inner { width: 32px; height: 32px; border-radius: 50%; background: var(--accent2); transition: border-radius 0.3s, width 0.3s, height 0.3s; }
     .rec-btn.recording .rec-inner { border-radius: 6px; width: 26px; height: 26px; }
     .rec-btn.recording::after {
       content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
-      border: 2px solid var(--danger); animation: pulse 1.5s ease-out infinite; opacity: 0;
+      border: 2px solid var(--accent2); animation: pulse 1.5s ease-out infinite; opacity: 0;
     }
     @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
 
@@ -161,7 +161,7 @@
 <body>
 
 <header>
-  <div class="logo">Voice<span>Log</span></div>
+  <div class="logo">RipV<span>oice</span></div>
   <button class="api-btn" id="apiBtn" onclick="openModal()">API KEY</button>
 </header>
 
