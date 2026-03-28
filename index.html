@@ -329,6 +329,10 @@ TRANSCRIPTIE:
     else startRecording();
   }
 
+  let autoRestartTimeout = null;
+  const AUTO_RESTART_MS = 45 * 60 * 1000; // 45 minuten
+  let isAutoRestarting = false;
+
   async function startRecording() {
     const key = localStorage.getItem('groq_key');
     if (!key) { openModal(); return; }
@@ -336,7 +340,16 @@ TRANSCRIPTIE:
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       audioCtx = new AudioContext(); analyser = audioCtx.createAnalyser(); analyser.fftSize = 2048;
       audioCtx.createMediaStreamSource(stream).connect(analyser);
-      mediaRecorder = new MediaRecorder(stream); audioChunks = [];
+
+      // Probeer 64kbps te forceren, fallback naar wat beschikbaar is
+      const options = {};
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        options.mimeType = 'audio/webm;codecs=opus';
+        options.audioBitsPerSecond = 64000;
+      }
+
+      mediaRecorder = new MediaRecorder(stream, options);
+      audioChunks = [];
       mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
       mediaRecorder.onstop = handleStop;
       mediaRecorder.start();
@@ -346,10 +359,19 @@ TRANSCRIPTIE:
       document.getElementById('timer').classList.add('active');
       document.getElementById('btnHint').textContent = 'tik om te stoppen';
       startTimer(); drawWaveform();
+
+      // Auto-restart na 45 minuten
+      autoRestartTimeout = setTimeout(() => {
+        isAutoRestarting = true;
+        showToast('Segment volledig — herstart automatisch...');
+        stopRecording();
+      }, AUTO_RESTART_MS);
+
     } catch (err) { showToast('Geen microfoon toegang', true); }
   }
 
   function stopRecording() {
+    if (autoRestartTimeout) { clearTimeout(autoRestartTimeout); autoRestartTimeout = null; }
     mediaRecorder.stop(); mediaRecorder.stream.getTracks().forEach(t => t.stop());
     stopTimer(); stopWaveform(); analyser = null;
     if (audioCtx) { audioCtx.close(); audioCtx = null; }
@@ -378,15 +400,20 @@ TRANSCRIPTIE:
       if (!res.ok) { const e = await res.json(); throw new Error(e?.error?.message || 'API fout'); }
       const data = await res.json();
       addEntry(timestamp, data.text);
-      showToast('Transcriptie klaar');
+      showToast(isAutoRestarting ? 'Segment klaar — nieuwe opname start...' : 'Transcriptie klaar');
     } catch (err) {
       showToast(err.message || 'Transcriptie mislukt', true);
+      isAutoRestarting = false;
     } finally {
       document.getElementById('statusLabel').textContent = 'GEREED';
       document.getElementById('statusLabel').className = 'status-label';
       document.getElementById('spinner').classList.remove('visible');
       document.getElementById('recBtn').disabled = false;
       document.getElementById('btnHint').textContent = 'tik om op te nemen';
+      if (isAutoRestarting) {
+        isAutoRestarting = false;
+        setTimeout(() => startRecording(), 800);
+      }
     }
   }
 
