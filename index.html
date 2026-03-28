@@ -27,344 +27,133 @@
       --sans: 'Syne', sans-serif;
     }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      overflow-x: hidden;
-    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+    body { display: flex; flex-direction: column; min-height: 100dvh; }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100dvh;
-    }
-
-    /* ── Header ── */
     header {
       padding: 20px 24px 16px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
-
-    .logo {
-      font-family: var(--sans);
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: -0.02em;
-    }
-
+    .logo { font-family: var(--sans); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; }
     .logo span { color: var(--accent); }
-
     .api-btn {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 6px 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.05em;
+      font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 6px 10px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em;
     }
     .api-btn:hover { border-color: var(--accent); color: var(--accent); }
     .api-btn.set { border-color: #2a3a00; color: #8fbb00; }
 
-    /* ── Main ── */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 24px;
-      gap: 24px;
-      max-width: 640px;
-      width: 100%;
-      margin: 0 auto;
-    }
+    main { flex: 1; display: flex; flex-direction: column; padding: 24px; gap: 24px; max-width: 640px; width: 100%; margin: 0 auto; }
 
-    /* ── Recorder ── */
     .recorder-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
-
-    .status-label {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    .status-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
     .status-label.active { color: var(--danger); }
     .status-label.processing { color: var(--accent); }
 
-    /* Waveform canvas */
-    #waveform {
-      width: 100%;
-      height: 64px;
-      border-radius: 8px;
-      background: #0f0f0f;
-      display: block;
-    }
+    #waveform { width: 100%; height: 64px; border-radius: 8px; background: #0f0f0f; display: block; }
 
-    /* Timer */
-    .timer {
-      font-family: var(--mono);
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--text);
-      line-height: 1;
-    }
+    .timer { font-family: var(--mono); font-size: 2.4rem; font-weight: 700; letter-spacing: 0.05em; color: var(--text); line-height: 1; }
     .timer.active { color: var(--accent); }
 
-    /* Record button */
     .rec-btn {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 3px solid var(--border);
-      background: var(--surface);
-      cursor: pointer;
-      position: relative;
-      transition: border-color 0.2s, transform 0.1s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--border);
+      background: var(--surface); cursor: pointer; position: relative;
+      transition: border-color 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center;
     }
     .rec-btn:active { transform: scale(0.95); }
     .rec-btn:hover { border-color: var(--accent); }
     .rec-btn.recording { border-color: var(--danger); }
-
-    .rec-inner {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--danger);
-      transition: border-radius 0.3s, width 0.3s, height 0.3s;
-    }
-    .rec-btn.recording .rec-inner {
-      border-radius: 6px;
-      width: 26px;
-      height: 26px;
-    }
-
-    /* Pulse ring */
+    .rec-inner { width: 32px; height: 32px; border-radius: 50%; background: var(--danger); transition: border-radius 0.3s, width 0.3s, height 0.3s; }
+    .rec-btn.recording .rec-inner { border-radius: 6px; width: 26px; height: 26px; }
     .rec-btn.recording::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 2px solid var(--danger);
-      animation: pulse 1.5s ease-out infinite;
-      opacity: 0;
+      content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+      border: 2px solid var(--danger); animation: pulse 1.5s ease-out infinite; opacity: 0;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
 
-    .btn-hint {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    .btn-hint { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    /* ── Transcript section ── */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .section-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .section-title {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .copy-btn, .clear-btn {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
+    .copy-btn, .clear-btn, .analyse-btn {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
     }
     .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
     .clear-btn:hover { border-color: var(--danger); color: var(--danger); }
+    .analyse-btn { border-color: var(--accent2); color: var(--accent2); }
+    .analyse-btn:hover:not(:disabled) { background: var(--accent2); color: #000; }
+    .analyse-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
     .transcript-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      min-height: 120px;
-      max-height: 40vh;
-      overflow-y: auto;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      line-height: 1.7;
-      color: var(--text);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px; min-height: 120px; max-height: 35vh; overflow-y: auto;
+      font-family: var(--mono); font-size: 0.8rem; line-height: 1.7; color: var(--text);
     }
-
     .transcript-box::-webkit-scrollbar { width: 4px; }
-    .transcript-box::-webkit-scrollbar-track { background: transparent; }
     .transcript-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .placeholder {
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    .transcript-entry {
-      padding-bottom: 12px;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
+    .placeholder { color: var(--muted); font-style: italic; }
+    .transcript-entry { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
     .transcript-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .entry-meta { font-size: 0.6rem; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.05em; }
 
-    .entry-meta {
-      font-size: 0.6rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      letter-spacing: 0.05em;
+    /* Analysis */
+    .analysis-section { display: none; }
+    .analysis-section.visible { display: block; }
+    .analysis-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .analysis-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #8fbb00; }
+    .copy-analysis-btn {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+      background: none; border: 1px solid #2a3a00; color: #8fbb00;
+      padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
     }
+    .copy-analysis-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .analysis-box {
+      background: #0d1100; border: 1px solid #2a3a00; border-radius: 12px;
+      padding: 16px; min-height: 80px; max-height: 50vh; overflow-y: auto;
+      font-family: var(--mono); font-size: 0.78rem; line-height: 1.8; color: #c8e86a; white-space: pre-wrap;
+    }
+    .analysis-box::-webkit-scrollbar { width: 4px; }
+    .analysis-box::-webkit-scrollbar-thumb { background: #2a3a00; border-radius: 2px; }
+    .analysis-loading { color: var(--accent2); font-style: italic; }
 
-    /* ── Toast ── */
+    /* Toast */
     #toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
+      position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: var(--accent);
-      color: #000;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      padding: 10px 20px;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-      z-index: 100;
-      white-space: nowrap;
+      background: var(--accent); color: #000;
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      padding: 10px 20px; border-radius: 8px; transition: transform 0.3s ease;
+      z-index: 100; white-space: nowrap;
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
     #toast.error { background: var(--danger); color: #fff; }
 
-    /* ── Modal ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 24px; }
     .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px 24px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .modal h2 {
-      font-family: var(--sans);
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
-
-    .modal p {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 400px; }
+    .modal h2 { font-family: var(--sans); font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; }
+    .modal p { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
     .modal input {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-      margin-bottom: 16px;
+      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 14px; font-family: var(--mono); font-size: 0.8rem; color: var(--text);
+      outline: none; transition: border-color 0.2s; margin-bottom: 16px;
     }
     .modal input:focus { border-color: var(--accent); }
-
     .modal-actions { display: flex; gap: 10px; }
+    .btn-primary { flex: 1; background: var(--accent); color: #000; border: none; border-radius: 8px; padding: 12px; font-family: var(--mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; }
+    .btn-ghost { flex: 1; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: var(--mono); font-size: 0.75rem; cursor: pointer; }
 
-    .btn-primary {
-      flex: 1;
-      background: var(--accent);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      padding: 12px;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-
-    .btn-ghost {
-      flex: 1;
-      background: none;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
-
-    /* Spinner */
-    .spinner {
-      width: 20px; height: 20px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      display: none;
-    }
+    .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
     .spinner.visible { display: block; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
@@ -391,7 +180,8 @@
   <div>
     <div class="section-header">
       <span class="section-title">Transcriptie</span>
-      <div style="display:flex;gap:8px">
+      <div class="action-row">
+        <button class="analyse-btn" id="analyseBtn" onclick="analyseTranscript()" disabled>✦ ANALYSEER</button>
         <button class="copy-btn" onclick="copyAll()">KOPIEER</button>
         <button class="clear-btn" onclick="clearAll()">WISSEN</button>
       </div>
@@ -400,9 +190,16 @@
       <span class="placeholder">Transcripties verschijnen hier...</span>
     </div>
   </div>
+
+  <div class="analysis-section" id="analysisSection">
+    <div class="analysis-header">
+      <span class="analysis-title">✦ Analyse</span>
+      <button class="copy-analysis-btn" onclick="copyAnalysis()">KOPIEER</button>
+    </div>
+    <div class="analysis-box" id="analysisBox"></div>
+  </div>
 </main>
 
-<!-- API Key Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>Groq API Key</h2>
@@ -418,7 +215,51 @@
 <div id="toast"></div>
 
 <script>
-  // ── State ──
+  const ANALYSE_PROMPT = `DOEL
+Analyseer de onderstaande transcriptie en maak een gestructureerde samenvatting, inclusief sprekers en acties.
+
+CONTEXT
+De transcriptie is automatisch gegenereerd en bevat mogelijk fouten, onvolledigheden, verkeerde woorden of ontbrekende sprekerlabels. Interpreteer logisch: corrigeer fouten, vul ontbrekende woorden aan en probeer te bepalen wie er spreekt op basis van context, inhoud, woordgebruik, verwijzingen naar personen, en wisselingen in zinsbouw.
+
+BRON
+Hieronder plak ik de transcriptie. Gebruik uitsluitend deze tekst.
+
+WAT JE MOET DOEN
+
+1. Identificeer en label sprekers
+- Probeer waar mogelijk namen of rollen te koppelen aan de sprekers.
+- Als een naam onzeker is: noteer (waarschijnlijk: ...).
+- Als het echt niet te bepalen is: noteer (spreker onbekend).
+- Gebruik context zoals zinsbouw, verwijzingen, inhoud en aanspreekvormen.
+
+2. Samenvatting van de bespreking (bulletpoints)
+- Maak een heldere lijst van alle besproken thema's.
+- Noteer per punt wie iets gezegd of aangebracht heeft, indien te bepalen.
+- Combineer dubbele informatie en corrigeer foute transcripten.
+- Schrijf bondig en duidelijk.
+
+3. Actielijst (to-do's)
+Voor elk actiepunt:
+- Wat moet er gebeuren
+- Wie verantwoordelijk is (gebruik namen of "waarschijnlijk: ..." wanneer niet zeker)
+- Eventuele deadline (indien genoemd)
+- Zorg dat actiepunten concreet en uitvoerbaar zijn
+
+FORMAT
+Lever het antwoord op in deze structuur:
+
+SAMENVATTING (met sprekers)
+- Naam/rol: punt dat deze persoon heeft aangebracht
+- ...
+
+ACTIELIJST
+- Actie: ...
+  Verantwoordelijke: ...
+  Extra context: ...
+
+TRANSCRIPTIE:
+`;
+
   let mediaRecorder = null;
   let audioChunks = [];
   let timerInterval = null;
@@ -427,36 +268,25 @@
   let animFrame = null;
   let audioCtx = null;
   let entries = [];
+  let lastAnalysis = '';
 
-  // ── API Key ──
   function openModal() {
-    const k = localStorage.getItem('groq_key') || '';
-    document.getElementById('keyInput').value = k;
+    document.getElementById('keyInput').value = localStorage.getItem('groq_key') || '';
     document.getElementById('modalOverlay').classList.add('open');
   }
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
   function saveKey() {
     const val = document.getElementById('keyInput').value.trim();
     if (!val) { showToast('Vul een key in', true); return; }
     localStorage.setItem('groq_key', val);
-    updateApiBtn();
-    closeModal();
-    showToast('API key opgeslagen');
+    updateApiBtn(); closeModal(); showToast('API key opgeslagen');
   }
   function updateApiBtn() {
     const btn = document.getElementById('apiBtn');
-    if (localStorage.getItem('groq_key')) {
-      btn.textContent = '✓ KEY SET';
-      btn.classList.add('set');
-    } else {
-      btn.textContent = 'API KEY';
-      btn.classList.remove('set');
-    }
+    if (localStorage.getItem('groq_key')) { btn.textContent = '✓ KEY SET'; btn.classList.add('set'); }
+    else { btn.textContent = 'API KEY'; btn.classList.remove('set'); }
   }
 
-  // ── Timer ──
   function startTimer() {
     seconds = 0;
     timerInterval = setInterval(() => {
@@ -466,103 +296,63 @@
       document.getElementById('timer').textContent = `${m}:${s}`;
     }, 1000);
   }
-  function stopTimer() {
-    clearInterval(timerInterval);
-    document.getElementById('timer').textContent = '00:00';
-  }
+  function stopTimer() { clearInterval(timerInterval); document.getElementById('timer').textContent = '00:00'; }
 
-  // ── Waveform ──
   function drawWaveform() {
     const canvas = document.getElementById('waveform');
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    if (!analyser) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
-    }
-
+    canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+    if (!analyser) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
     const data = new Uint8Array(analyser.frequencyBinCount);
     function draw() {
       animFrame = requestAnimationFrame(draw);
       analyser.getByteTimeDomainData(data);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#e8ff47';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      const sliceWidth = canvas.width / data.length;
-      let x = 0;
+      ctx.strokeStyle = '#e8ff47'; ctx.lineWidth = 1.5; ctx.beginPath();
+      const sliceWidth = canvas.width / data.length; let x = 0;
       for (let i = 0; i < data.length; i++) {
-        const v = data[i] / 128.0;
-        const y = (v * canvas.height) / 2;
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-        x += sliceWidth;
+        const v = data[i] / 128.0; const y = (v * canvas.height) / 2;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); x += sliceWidth;
       }
-      ctx.lineTo(canvas.width, canvas.height / 2);
-      ctx.stroke();
+      ctx.lineTo(canvas.width, canvas.height / 2); ctx.stroke();
     }
     draw();
   }
-
   function stopWaveform() {
     if (animFrame) cancelAnimationFrame(animFrame);
-    const canvas = document.getElementById('waveform');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const c = document.getElementById('waveform');
+    c.getContext('2d').clearRect(0, 0, c.width, c.height);
   }
 
-  // ── Recording ──
   async function toggleRecording() {
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-      stopRecording();
-    } else {
-      startRecording();
-    }
+    if (mediaRecorder && mediaRecorder.state === 'recording') stopRecording();
+    else startRecording();
   }
 
   async function startRecording() {
     const key = localStorage.getItem('groq_key');
     if (!key) { openModal(); return; }
-
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      audioCtx = new AudioContext();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 2048;
+      audioCtx = new AudioContext(); analyser = audioCtx.createAnalyser(); analyser.fftSize = 2048;
       audioCtx.createMediaStreamSource(stream).connect(analyser);
-
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
+      mediaRecorder = new MediaRecorder(stream); audioChunks = [];
       mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
       mediaRecorder.onstop = handleStop;
       mediaRecorder.start();
-
-      // UI
       document.getElementById('recBtn').classList.add('recording');
       document.getElementById('statusLabel').textContent = 'OPNAME LOOPT';
       document.getElementById('statusLabel').className = 'status-label active';
       document.getElementById('timer').classList.add('active');
       document.getElementById('btnHint').textContent = 'tik om te stoppen';
-
-      startTimer();
-      drawWaveform();
-    } catch (err) {
-      showToast('Geen microfoon toegang', true);
-    }
+      startTimer(); drawWaveform();
+    } catch (err) { showToast('Geen microfoon toegang', true); }
   }
 
   function stopRecording() {
-    if (mediaRecorder) mediaRecorder.stop();
-    mediaRecorder.stream.getTracks().forEach(t => t.stop());
-
-    stopTimer();
-    stopWaveform();
-    analyser = null;
+    mediaRecorder.stop(); mediaRecorder.stream.getTracks().forEach(t => t.stop());
+    stopTimer(); stopWaveform(); analyser = null;
     if (audioCtx) { audioCtx.close(); audioCtx = null; }
-
     document.getElementById('recBtn').classList.remove('recording');
     document.getElementById('timer').classList.remove('active');
     document.getElementById('statusLabel').textContent = 'VERWERKEN...';
@@ -576,25 +366,16 @@
     const blob = new Blob(audioChunks, { type: 'audio/webm' });
     const key = localStorage.getItem('groq_key');
     const timestamp = new Date().toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
-
     try {
       const formData = new FormData();
       formData.append('file', blob, 'audio.webm');
       formData.append('model', 'whisper-large-v3');
       formData.append('language', 'nl');
       formData.append('response_format', 'json');
-
       const res = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${key}` },
-        body: formData
+        method: 'POST', headers: { 'Authorization': `Bearer ${key}` }, body: formData
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err?.error?.message || 'API fout');
-      }
-
+      if (!res.ok) { const e = await res.json(); throw new Error(e?.error?.message || 'API fout'); }
       const data = await res.json();
       addEntry(timestamp, data.text);
       showToast('Transcriptie klaar');
@@ -609,51 +390,91 @@
     }
   }
 
-  // ── Entries ──
   function addEntry(time, text) {
     entries.push({ time, text });
     renderEntries();
+    document.getElementById('analyseBtn').disabled = false;
   }
 
   function renderEntries() {
     const box = document.getElementById('transcriptBox');
     if (!entries.length) {
       box.innerHTML = '<span class="placeholder">Transcripties verschijnen hier...</span>';
+      document.getElementById('analyseBtn').disabled = true;
       return;
     }
     box.innerHTML = entries.map(e => `
       <div class="transcript-entry">
         <div class="entry-meta">${e.time}</div>
         <div>${e.text}</div>
-      </div>
-    `).join('');
+      </div>`).join('');
     box.scrollTop = box.scrollHeight;
   }
 
   function copyAll() {
     if (!entries.length) { showToast('Niets te kopiëren', true); return; }
-    const text = entries.map(e => `[${e.time}]\n${e.text}`).join('\n\n');
-    navigator.clipboard.writeText(text).then(() => showToast('Gekopieerd!'));
+    navigator.clipboard.writeText(entries.map(e => `[${e.time}]\n${e.text}`).join('\n\n'))
+      .then(() => showToast('Gekopieerd!'));
   }
 
   function clearAll() {
-    entries = [];
+    entries = []; lastAnalysis = '';
     renderEntries();
+    document.getElementById('analysisSection').classList.remove('visible');
   }
 
-  // ── Toast ──
+  async function analyseTranscript() {
+    const key = localStorage.getItem('groq_key');
+    if (!key) { openModal(); return; }
+    if (!entries.length) { showToast('Geen transcriptie om te analyseren', true); return; }
+
+    const fullTranscript = entries.map(e => `[${e.time}]\n${e.text}`).join('\n\n');
+    const section = document.getElementById('analysisSection');
+    const box = document.getElementById('analysisBox');
+    const btn = document.getElementById('analyseBtn');
+
+    section.classList.add('visible');
+    box.innerHTML = '<span class="analysis-loading">Analyseren met Llama 3.3...</span>';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: ANALYSE_PROMPT + fullTranscript }],
+          max_tokens: 2048,
+          temperature: 0.3
+        })
+      });
+      if (!res.ok) { const e = await res.json(); throw new Error(e?.error?.message || 'Analyse fout'); }
+      const data = await res.json();
+      lastAnalysis = data.choices?.[0]?.message?.content || '(Geen resultaat)';
+      box.textContent = lastAnalysis;
+      box.scrollTop = 0;
+      showToast('Analyse klaar');
+    } catch (err) {
+      box.innerHTML = `<span style="color:var(--danger)">${err.message}</span>`;
+      showToast(err.message || 'Analyse mislukt', true);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function copyAnalysis() {
+    if (!lastAnalysis) { showToast('Geen analyse om te kopiëren', true); return; }
+    navigator.clipboard.writeText(lastAnalysis).then(() => showToast('Analyse gekopieerd!'));
+  }
+
   function showToast(msg, isError = false) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = isError ? 'error show' : 'show';
+    t.textContent = msg; t.className = isError ? 'error show' : 'show';
     setTimeout(() => t.className = isError ? 'error' : '', 2800);
   }
 
-  // ── Init ──
   updateApiBtn();
-  document.getElementById('keyInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') saveKey();
-  });
+  document.getElementById('keyInput').addEventListener('keydown', e => { if (e.key === 'Enter') saveKey(); });
 </script>
 </body>
 </html>
